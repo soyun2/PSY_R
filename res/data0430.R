@@ -109,3 +109,4 @@ monteTest<-function(n){
 }
 monteTest(100000)
 
+runif(5, min=0, max=1)
