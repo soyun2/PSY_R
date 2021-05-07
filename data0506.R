@@ -100,3 +100,19 @@ names(airquality)<-tolower(names(airquality))
 melt_test<-melt(airquality, id.vars=c('month','day'), variable.name='climate_variable'
                  , value.name='climate_value')
 head(melt_test)
+tail(melt_test3)
+View(melt_test3)
+
+#acast() : vector, matrix, array 변환
+#dcast() : data frame 변환
+
+aq_melt <- melt(airquality, id=c('month','day'), na.rm=T)
+library('reshape2')
+aq_melt
+aq_dcast <- dcast(aq_melt, month+day~variable)
+class(aq_dcast)
+head(aq_dcast)
+head(aq_melt)
+acast(aq_melt, day~month~variable)
+acast(aq_melt,month~variable, mean)
+dcast(aq_melt, month~variable,mean)
