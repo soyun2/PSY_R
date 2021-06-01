@@ -36,3 +36,12 @@ newsTitle<-newsData2$title
 exNouns<-function(x){paste(extractNoun(x), colapse=" ")}
 newsNouns<-sapply(newsTitle, exNouns)
 newsNouns
+
+newsCorpus<-Corpus(VectorSource(newsNouns))
+inspect(newsCorpus)
+tdm<-TermDocumentMatrix(newsCorpus, control=list(wordLengths=c(4,16)))
+tdm
+
+tdmDF <- as.data.frame(as.matrix(tdm))
+wordResult <- sort(rowSums(tdmDF), decreasing=T)
+head(wordResult)
