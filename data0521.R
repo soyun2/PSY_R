@@ -11,7 +11,7 @@ ggmap(ggDaegu)
 library(dplyr)
 library(ggplot2)
 
-findName <- "동대구역"
+findName <- "구미"
 geoCode <- enc2utf8(findName) %>% geocode()
 geoData <- as.numeric(geoCode)
 #maptype -> terrain, 

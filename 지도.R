@@ -1,0 +1,33 @@
+data<-read.csv("res/elecar.csv")
+View(data)
+data$id<-1:17
+
+library(ggmap)
+library(ggplot2)
+install.packages("raster")
+install.packages("rgeos")
+install.packages("maptools")
+install.packages("rgdal")
+str(data)
+library(raster)
+library(rgeos)
+library(maptools)
+library(rgdal)
+install.packages("sf")
+library(sf)
+korea<-st_read("res/TL_SCCO_CTPRVN.shp")
+korea<-shapefile("res/TL_SCCO_CTPRVN.shp")
+korea<-spTransform(korea,CRS("+proj=longlat"))
+korea_map<-fortify(korea)
+merge_result<-merge(map_korea_df,data,by="id")
+View(merge_result)
+ggplot()
+p<-ggplot()+geom_polygon(data=merge_result, color='black', aes(x=long,y=lat,group=group,fill=rate))+labs(fill="지역별 전기차 보유 현황")
+merge_result$차량대수 = as.numeric(levels(merge_result$차량대수))[merge_result$차량대수]
+p+scale_fill_gradient(low='white',high='orange')
+
+View(data)
+
+x<-ggplot(merge_result,aes(x=long,y=lat,group=group,fill=rate))+geom_polygon(color="black")
+x+scale_fill_gradient(low='lemonchiffon',high='dark red')
+map<-get_map(location='south korea', zoom=7, maptype='roadmap',color='bw')
